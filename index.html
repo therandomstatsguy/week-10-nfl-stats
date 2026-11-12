@@ -1948,7 +1948,7 @@ function statTabs(sk){
   if(sk==='recLong') return [10,15,20,30].map(v=>({k:''+v,label:v+'+',v}));
   const tabs=[]; if(LINEKEY[sk]) tabs.push({k:'ou',label:'O/U',ou:1});
   (STATS[sk].alts||[]).forEach(v=>tabs.push({k:''+v,label:v+'+',v})); return tabs; }
-function playerLine(pid,sk){ const pr=PROPS[pid]; const L=pr&&pr.lines&&pr.lines[LINEKEY[sk]]; return L&&L.line!=null?L.line:null; }
+function playerLine(pid,sk){ const pr=PROPS[pid]; const L=pr&&pr.lines&&pr.lines[LINEKEY[sk]]; if(L&&L.line!=null)return L.line; const np=NPROPS[pid]; const NL=np&&np.lines&&np.lines[LINEKEY[sk]]; return NL&&NL.line!=null?NL.line:null; }
 function tileHit(sk,tab,r,pid,ptdMap){
   if(tab.ptd){ const g=ptdMap&&ptdMap[r[GX.sea]+'_'+r[GX.wk]]; if(!g)return false; return Array.isArray(tab.ptd)?!!g[tab.ptd[0]][tab.ptd[1]]:!!g[tab.ptd]; }
   if(tab.ou){ const ln=playerLine(pid,sk); return ln!=null?(STATS[sk].get(r)>ln):false; }
